@@ -4,7 +4,7 @@ const connectDB = async () => {
   try {
 
     if (!process.env.MONGO_URL) {
-      console.log("MONGO_URI not found");
+      console.log("MONGO_URL not found");
       return;
     }
 

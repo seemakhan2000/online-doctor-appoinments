@@ -3,12 +3,12 @@ const mongoose = require("mongoose");
 const connectDB = async () => {
   try {
 
-    if (!process.env.MONGODB_URI) {
+    if (!process.env.MONGO_URL) {
       console.log("MONGO_URI not found");
       return;
     }
 
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(process.env.MONGO_URL);
 
     console.log("MongoDB connected successfully");
 

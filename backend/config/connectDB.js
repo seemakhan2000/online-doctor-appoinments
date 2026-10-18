@@ -2,18 +2,24 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
   try {
+    const mongoUrl = process.env.MONGO_URL;
 
-    if (!process.env.MONGO_URL) {
-      console.log("MONGO_URL not found");
-      return;
+    if (!mongoUrl) {
+      throw new Error("MONGO_URL environment variable is missing");
     }
 
-    await mongoose.connect(process.env.MONGO_URL);
+    if (mongoose.connection.readyState === 1) {
+      return mongoose.connection;
+    }
+
+    await mongoose.connect(mongoUrl);
 
     console.log("MongoDB connected successfully");
 
+    return mongoose.connection;
   } catch (error) {
-    console.log("DB connection failed:", error.message);
+    console.error("DB connection failed:", error.message);
+    throw error;
   }
 };
 
